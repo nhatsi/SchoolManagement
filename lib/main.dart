@@ -1,25 +1,27 @@
-﻿import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+﻿import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:school_management/Screens/Leave_Apply/LeaveApply.dart';
 import 'package:school_management/Screens/LoginPage.dart';
-import 'firebase_options.dart'; // Import the generated firebase_options.dart file
+import 'firebase_options.dart';
+import 'package:school_management/seed_data.dart';
 
- void main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase using the generated options
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // This automatically selects the right platform configuration
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Chạy 1 lần để tạo dữ liệu mẫu lên Firestore.
+  // Sau khi seed xong, hãy comment dòng này lại.
+   await SeedData.seedAll();
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
+
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   }
@@ -32,12 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: ''),
+      home: const MyHomePage(title: ''),
     );
   }
 }
-
-
-
-
-
